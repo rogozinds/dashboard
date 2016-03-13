@@ -42,7 +42,7 @@ Dashboard.prototype = {
                 height: elemHeight
             },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: item.categories
             },
 
             series: [{

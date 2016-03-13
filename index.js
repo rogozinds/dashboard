@@ -2,6 +2,7 @@ var items= [
     {
         type:"line-chart",
         data:[29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
+        categories:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         style:{
             width: "400",
             height: "300",
@@ -29,10 +30,12 @@ var items= [
     },
     {
         type:"text",
-        data:["SOME"],
+        data:["42"],
         style:{
-            width: "200",
-            height: "300"
+            textAlign: "center",
+            fontSize: "50px",
+            width: "80",
+            height: "80"
         }
     },
     {
@@ -41,6 +44,24 @@ var items= [
         style:{
             width: "200",
             height: "300"
+        }
+    },
+    {
+        type:"spline-chart",
+        data:[30, 12, 50, 129.2, 144.0, 40.0, 135.6, 148.5, 216.4, 194.1, 16, 54.4],
+        style:{
+            width: "500",
+            height: "400",
+            backgroundColor:"yellow"
+        }
+    },
+    {
+        type:"area-chart",
+        data:[30, 12, 50, 129.2, 144.0, 40.0, 135.6, 148.5, 216.4, 194.1, 16, 54.4],
+        style:{
+            width: "500",
+            height: "400",
+            backgroundColor:"yellow"
         }
     }
 

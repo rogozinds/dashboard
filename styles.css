@@ -10,4 +10,6 @@
 .item {
     margin: 2px;
     background-color:red;
+    -webkit-align-content: center;
+    align-content: center;
 }
