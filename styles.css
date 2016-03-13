@@ -1,0 +1,13 @@
+
+.container {
+    display:flex;
+    flex-wrap:wrap;
+}
+.higcharts-container {
+    vertical-align:top;
+}
+
+.item {
+    margin: 2px;
+    background-color:red;
+}
