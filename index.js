@@ -61,13 +61,24 @@ var items= [
         style:{
             width: "500",
             height: "400",
-            backgroundColor:"yellow"
+            backgroundColor:"yellow",
+            marginTop:"50"
         }
-    }
+    },
+        {
+        type:"area-chart",
+        data:[30, 40, 32, 420 ,432,32],
+        style:{
+            width: "500",
+            height: "400",
+            backgroundColor:"green"
+        }
+    },
 
 
 ]
 
 document.addEventListener("DOMContentLoaded", function(event) {
     var dashboard=new Dashboard(items);
+    //new Resize();
 });

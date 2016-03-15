@@ -2,30 +2,79 @@ var Dashboard = function (items) {
     this.items = items;
     this.build();
 }
-
+var headerHeight=20;
 Dashboard.prototype = {
 
-    build: function () {
+    addDrag: function (item) {
+        item.addEventListener('click', function init() {
+            item.removeEventListener('click', init, false);
+            item.className = item.className + ' resizable';
+            var resizer = document.createElement('div');
+            resizer.className = 'resizer';
+            item.appendChild(resizer);
+            resizer.addEventListener('mousedown',
+                function (e) {
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startWidth = parseInt(document.defaultView.getComputedStyle(item).width, 10);
+                    startHeight = parseInt(document.defaultView.getComputedStyle(item).height, 10);
+                    var mouseMove = function (e) {
+                        item.style.width = (startWidth + e.clientX - startX) + 'px';
+                        item.style.height = (startHeight + e.clientY - startY) + 'px';
+                    };
+                    var mouseUp = function (e) {
+                        //remove listeners
+                        document.documentElement.removeEventListener('mousemove', mouseMove, false);
+                        document.documentElement.removeEventListener('mouseup', mouseUp, false);
+                    };
 
+                    document.documentElement.addEventListener('mousemove', mouseMove, false);
+                    document.documentElement.addEventListener('mouseup', mouseUp, false);
+                }
+                , false);
+        }, false);
+    },
+    build: function () {
         var container = document.createElement("div");
         container.setAttribute("class", "container");
         container.setAttribute("id", "container");
         document.body.appendChild(container);
         for (i = 0; i < this.items.length; i++) {
             var item=items[i];
-            var div = document.createElement("div");
-            div.setAttribute("class", "item");
-            div.setAttribute("draggable", "true");
-            div.setAttribute("ondragstart", "drag(event)");
-            div.setAttribute("ondragover", "allowDrag(event)");
-            div.setAttribute("ondrop", "drop(event)");
+            var header = document.createElement("div");
 
-            div.setAttribute("class", "item");
-            div.setAttribute("id","item"+i);
+            header.setAttribute("class", "item header");
+            header.style.height=headerHeight+"px";
+            header.className = header.className + ' header';
 
-            this.setStyle(div,item.style);
-            container.appendChild(div);
-            this.setContent(div,item);
+            var layoutDiv = document.createElement("div");
+            layoutDiv.setAttribute("class", "item");
+            layoutDiv.draggable=false;
+            layoutDiv.setAttribute("ondragstart", "drag(event)");
+            layoutDiv.setAttribute("ondragover", "allowDrag(event)");
+            layoutDiv.setAttribute("ondrop", "drop(event)");
+            layoutDiv.class="item";
+            layoutDiv.setAttribute("id","item"+i);
+            header.addEventListener("dblclick",function(e){
+
+                layoutDiv.draggable = !layoutDiv.draggable;
+                if(layoutDiv.draggable) {
+                    layoutDiv.class=layoutDiv.class +" foo";
+                } else {
+                    layoutDiv.class=layoutDiv.class.replace(" foo","");
+                }
+
+                console.log(layoutDiv.class);
+            },false);
+
+
+
+            this.setStyle(layoutDiv,item.style);
+           // this.addDrag.call(this,layoutDiv);
+
+            layoutDiv.appendChild(header);
+            container.appendChild(layoutDiv);
+            this.setContent(layoutDiv,item);
         }
     },
     createTextNode: function(item) {
