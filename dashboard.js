@@ -23,8 +23,15 @@ Dashboard.prototype = {
                     var mouseMove = function (e) {
                         item.style.width = (startWidth + e.clientX - startX) + 'px';
                         item.style.height = (startHeight + e.clientY - startY) + 'px';
-                        if(item.chart) {
-                         item.chart.setSize(item.style.width.replace("px",""),item.style.height.replace("px","")-headerHeight,false);
+                        var chartDiv= item.getElementsByClassName("item")[1];
+                        if(chartDiv) {
+                            var width=item.style.width.replace("px","");
+                            var height=item.style.height.replace("px","")-headerHeight;
+                            chartDiv.style.width=width;
+                            chartDiv.style.height=height;
+                            chartDiv.parentDiv.style.width=width;
+                            chartDiv.parentDiv.style.height=height;
+                            chartDiv.chart.setSize(width,height,false);
                         }
                     };
                     var mouseUp = function (e) {
@@ -48,39 +55,32 @@ Dashboard.prototype = {
         document.body.appendChild(container);
         for (i = 0; i < this.items.length; i++) {
             var item=items[i];
+            var layoutDiv = document.createElement("div");
+            var contentDiv = document.createElement("div");
             var header = document.createElement("div");
 
             header.setAttribute("class", "item header");
             header.style.height=headerHeight+"px";
             header.className = header.className + ' header';
 
-            var layoutDiv = document.createElement("div");
+
             header.parentDiv=layoutDiv;
-            layoutDiv.setAttribute("class", "item");
+            contentDiv.parentDiv=layoutDiv;
+            contentDiv.setAttribute("class", "item");
             layoutDiv.draggable=true;
             layoutDiv.setAttribute("ondragstart", "drag(event)");
             layoutDiv.setAttribute("ondragover", "allowDrag(event)");
             layoutDiv.setAttribute("ondrop", "drop(event)");
             layoutDiv.class="item";
             layoutDiv.setAttribute("id","item"+i);
-            //header.addEventListener("dblclick",function(e){
-            //
-            //    layoutDiv.draggable = !layoutDiv.draggable;
-            //    if(layoutDiv.draggable) {
-            //        layoutDiv.class=layoutDiv.class +" foo";
-            //    } else {
-            //        layoutDiv.class=layoutDiv.class.replace(" foo","");
-            //    }
-            //},false);
 
-
-
-            this.setStyle(layoutDiv,item.style);
+            this.setStyle(contentDiv,item.style);
             this.addDrag.call(this,layoutDiv);
 
             layoutDiv.appendChild(header);
+            layoutDiv.appendChild(contentDiv);
             container.appendChild(layoutDiv);
-            this.setContent(layoutDiv,item);
+            this.setContent(contentDiv,item);
         }
     },
     createTextNode: function(item) {
@@ -88,7 +88,7 @@ Dashboard.prototype = {
     },
     createGraph: function(element,item) {
         var type = item.type.replace("-chart","")
-        var elemHeight=element.style.getPropertyValue("height").replace("px","")-20;
+        var elemHeight=element.style.getPropertyValue("height").replace("px","");
         var chart= new Highcharts.Chart({
             chart: {
                 type: type,
@@ -140,5 +140,5 @@ function drop(event) {
     console.log("DROPED FROM"+event.target.id+"ON"+event.dataTransfer.getData("text"));
     var container = document.getElementById("container");
     var dragedItem=document.getElementById(event.dataTransfer.getData("text"));
-    container.insertBefore(dragedItem,event.target);
+    container.insertBefore(dragedItem,event.target.parentDiv);
 }
