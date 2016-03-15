@@ -21,6 +21,9 @@ Dashboard.prototype = {
                     var mouseMove = function (e) {
                         item.style.width = (startWidth + e.clientX - startX) + 'px';
                         item.style.height = (startHeight + e.clientY - startY) + 'px';
+                        if(item.chart) {
+                         item.chart.setSize(item.style.width.replace("px",""),item.style.height.replace("px","")-headerHeight,false);
+                        }
                     };
                     var mouseUp = function (e) {
                         //remove listeners
@@ -70,7 +73,7 @@ Dashboard.prototype = {
 
 
             this.setStyle(layoutDiv,item.style);
-           // this.addDrag.call(this,layoutDiv);
+            this.addDrag.call(this,layoutDiv);
 
             layoutDiv.appendChild(header);
             container.appendChild(layoutDiv);
@@ -83,7 +86,7 @@ Dashboard.prototype = {
     createGraph: function(element,item) {
         var type = item.type.replace("-chart","")
         var elemHeight=element.style.getPropertyValue("height").replace("px","")-20;
-         new Highcharts.Chart({
+        var chart= new Highcharts.Chart({
             chart: {
                 type: type,
                 marginTop: 50,
@@ -98,6 +101,7 @@ Dashboard.prototype = {
                 data: item.data
             }]
         });
+        element.chart=chart;
     },
     setContent: function(element,item) {
         if(item.type == "text") {
