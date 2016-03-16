@@ -6,9 +6,9 @@ var headerHeight=20;
 Dashboard.prototype = {
 
     addDrag: function (item) {
+        var that =this;
         item.addEventListener('dblclick', function init() {
             item.draggable=false;
-
             item.removeEventListener('dblclick', init, false);
             item.className = item.className + ' resizable';
             var resizer = document.createElement('div');
@@ -38,8 +38,10 @@ Dashboard.prototype = {
                         //remove listeners
                         document.documentElement.removeEventListener('mousemove', mouseMove, false);
                         document.documentElement.removeEventListener('mouseup', mouseUp, false);
-                        item.removeChild(resizer);
                         item.draggable=true;
+                        item.className=item.className.replace(" resizable","");
+                        item.removeChild(resizer);
+                        that.addDrag(item);
                     };
 
                     document.documentElement.addEventListener('mousemove', mouseMove, false);
@@ -68,14 +70,14 @@ Dashboard.prototype = {
             contentDiv.parentDiv=layoutDiv;
             contentDiv.setAttribute("class", "item");
             layoutDiv.draggable=true;
-            layoutDiv.setAttribute("ondragstart", "drag(event)");
-            layoutDiv.setAttribute("ondragover", "allowDrag(event)");
-            layoutDiv.setAttribute("ondrop", "drop(event)");
+            layoutDiv.addEventListener("dragstart",drag,false);
+            layoutDiv.addEventListener("dragover", allowDrag,false);
+            layoutDiv.addEventListener("drop",drop,false);
             layoutDiv.class="item";
             layoutDiv.setAttribute("id","item"+i);
 
             this.setStyle(contentDiv,item.style);
-            this.addDrag.call(this,layoutDiv);
+            this.addDrag(layoutDiv);
 
             layoutDiv.appendChild(header);
             layoutDiv.appendChild(contentDiv);
@@ -136,9 +138,10 @@ function drag(event) {
 function allowDrag(event) {
     event.preventDefault();
 }
+
 function drop(event) {
-    console.log("DROPED FROM"+event.target.id+"ON"+event.dataTransfer.getData("text"));
     var container = document.getElementById("container");
     var dragedItem=document.getElementById(event.dataTransfer.getData("text"));
-    container.insertBefore(dragedItem,event.target.parentDiv);
+    var parent  = this;
+    container.insertBefore(dragedItem,parent);
 }
