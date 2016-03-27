@@ -1,5 +1,6 @@
 var Dashboard = function (items) {
     this.items = items;
+
     this.build();
 }
 var headerHeight=20;
@@ -91,6 +92,8 @@ Dashboard.prototype = {
     createGraph: function(element,item) {
         var type = item.type.replace("-chart","")
         var elemHeight=element.style.getPropertyValue("height").replace("px","");
+
+
         var chart= new Highcharts.Chart({
             chart: {
                 type: type,
@@ -98,14 +101,41 @@ Dashboard.prototype = {
                 renderTo: element,
                 height: elemHeight
             },
+
             xAxis: {
                 categories: item.categories
             },
-
             series: [{
-                data: item.data
+                data:item.data
             }]
         });
+
+        if(item.ajax) {
+            var ajaxRequest= function() {
+                $.ajax({
+                    url: item.ajax.url,
+                    type: item.ajax.type,
+                    async: item.ajax.async,
+                    dataType: item.ajax.dataType,
+                    success: function (data) {
+                        if(chart.series.length!=0) {
+                            chart.series[0].setData(data.message);
+                        } else  {
+                            chart.addSeries({data: data.message});
+                        }
+                    }
+                });
+            };
+            var callWithTimeout= function (timeout) {
+                setTimeout(function() {
+                    ajaxRequest();
+                    callWithTimeout(3000);
+                }, timeout
+                );
+            }
+            callWithTimeout(20);
+        }
+
         element.chart=chart;
     },
     setContent: function(element,item) {
