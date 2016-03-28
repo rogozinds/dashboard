@@ -112,18 +112,13 @@ Dashboard.prototype = {
 
         if(item.ajax) {
             var ajaxRequest= function() {
+                item.ajax.chart=chart;
                 $.ajax({
                     url: item.ajax.url,
                     type: item.ajax.type,
                     async: item.ajax.async,
                     dataType: item.ajax.dataType,
-                    success: function (data) {
-                        if(chart.series.length!=0) {
-                            chart.series[0].setData(data.message);
-                        } else  {
-                            chart.addSeries({data: data.message});
-                        }
-                    }
+                    success: item.ajax.callback.bind(item.ajax)
                 });
             };
             var callWithTimeout= function (timeout) {
