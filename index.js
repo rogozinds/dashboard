@@ -1,19 +1,19 @@
 var items= [
     {
         type:"line-chart",
-        //ajax: {
-        //    url: 'http://localhost:3300/api/mockdata',
-        //    type: 'GET',
-        //    async: true,
-        //    dataType: "json",
-        //    callback: function (data) {
-        //        if(this.chart.series.length!=0) {
-        //            this.chart.series[0].setData(data.message);
-        //        } else  {
-        //            this.chart.addSeries({data: data.message});
-        //        }
-        //    }
-        //},
+        ajax: {
+            url: 'http://localhost:3300/api/mockdata',
+            type: 'GET',
+            async: true,
+            dataType: "json",
+            callback: function (data) {
+                if(this.chart.series.length!=0) {
+                    this.chart.series[0].setData(data.message);
+                } else  {
+                    this.chart.addSeries({data: data.message});
+                }
+            }
+        },
         data:[29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
         categories:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         style:{

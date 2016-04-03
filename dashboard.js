@@ -31,9 +31,12 @@ Dashboard.prototype = {
                             var height=item.style.height.replace("px","")-headerHeight;
                             chartDiv.style.width=width;
                             chartDiv.style.height=height;
-                            chartDiv.parentDiv.style.width=width;
-                            chartDiv.parentDiv.style.height=height;
                             chartDiv.chart.setSize(width,height,false);
+                            //TODO: For some reason chart object has wrong width & height, that's why need to add
+                            // this ugly adjustment, figure out what's the problem.
+                            chartDiv.parentDiv.style.width=parseInt(width)+10;
+                            chartDiv.parentDiv.style.height=parseInt(height)+30;
+
                         }
                     };
                     var mouseUp = function (e) {
