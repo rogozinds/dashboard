@@ -128,7 +128,7 @@ Dashboard.prototype = {
             var callWithTimeout= function (timeout) {
                 setTimeout(function() {
                     ajaxRequest();
-                    callWithTimeout(3000);
+                    callWithTimeout(1000);
                 }, timeout
                 );
             }

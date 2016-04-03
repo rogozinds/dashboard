@@ -21,7 +21,10 @@ router.get('/mockdata', function(req, res) {
     var mockData=[
         [12,50,32,42, 32, 15, 23, 15],
         [50,12,1,22, 12, 55, 12, 25],
-        [100, 32, 54, 200, 32, 5, 2]
+        [1, 2, 4, 6, 10, 15, 22],
+        [30, 32, 20, 15, 12, 10, 2],
+        [70, 42, 24, 20, 32, 5, 2],
+            [11, 12, 14, 50, 30, 11, 11]
     ];
     var index = Math.floor(Math.random() * mockData.length);
     res.json({ message: mockData[index]});
