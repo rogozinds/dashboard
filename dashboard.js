@@ -24,7 +24,8 @@ Dashboard.prototype = {
                     var mouseMove = function (e) {
                         item.style.width = (startWidth + e.clientX - startX) + 'px';
                         item.style.height = (startHeight + e.clientY - startY) + 'px';
-                        var chartDiv= item.getElementsByClassName("item")[1];
+                        //TODO:  find a better way to find a chart div, not based on css rules.
+                        var chartDiv= item.getElementsByClassName("content")[0];
                         if(chartDiv) {
                             var width=item.style.width.replace("px","");
                             var height=item.style.height.replace("px","")-headerHeight;
@@ -62,19 +63,19 @@ Dashboard.prototype = {
             var contentDiv = document.createElement("div");
             var header = document.createElement("div");
 
-            header.setAttribute("class", "item header");
+            header.className = "panel-heading";
             header.style.height=headerHeight+"px";
-            header.className = header.className + ' header';
+
 
 
             header.parentDiv=layoutDiv;
             contentDiv.parentDiv=layoutDiv;
-            contentDiv.setAttribute("class", "item");
+            contentDiv.className="content";
             layoutDiv.draggable=true;
             layoutDiv.addEventListener("dragstart",drag,false);
             layoutDiv.addEventListener("dragover", allowDrag,false);
             layoutDiv.addEventListener("drop",drop,false);
-            layoutDiv.class="item";
+            layoutDiv.className="panel panel-primary item";
             layoutDiv.setAttribute("id","item"+i);
 
             this.setStyle(contentDiv,item.style);

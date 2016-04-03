@@ -1,14 +1,10 @@
 
 .container {
+    width:100%;
     display:flex;
     flex-wrap:wrap;
 }
-.item.header {
-    background-color: yellow;
-}
-.item.foo {
-    cursor: grab;
-}
+
 .higcharts-container {
     vertical-align:top;
 }
@@ -16,10 +12,14 @@
 div.resizable { background: cyan; position: relative; }
 div.resizer { width: 10px; height: 10px; background: blue; position:absolute; right: 0; bottom: 0; cursor: se-resize; }
 
+.content {
+    -webkit-align-content: center;
+    align-content: center;
+    cursor:default;
+}
 .item {
     cursor:default;
     margin: 2px;
-    background-color:red;
     -webkit-align-content: center;
     align-content: center;
 }
