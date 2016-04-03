@@ -2,7 +2,7 @@ var items= [
     {
         type:"line-chart",
         ajax: {
-            url: 'http://localhost:3300/api',
+            url: 'http://localhost:3300/api/mockdata',
             type: 'GET',
             async: true,
             dataType: "json",
