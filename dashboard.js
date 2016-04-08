@@ -105,6 +105,9 @@ Dashboard.prototype = {
 
 
         var chart= new Highcharts.Chart({
+            title: {
+                text:item.title
+            },
             chart: {
                 type: type,
                 marginTop: 50,

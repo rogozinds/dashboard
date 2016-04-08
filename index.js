@@ -1,8 +1,9 @@
 var items= [
     {
         type:"line-chart",
+        title: "API/MOCKDATA/1",
         ajax: {
-            url: 'http://localhost:3300/api/mockdata',
+            url: 'http://localhost:3300/api/mockdata/1',
             type: 'GET',
             async: true,
             timeout: 6000,
@@ -16,7 +17,7 @@ var items= [
             }
         },
         data:[29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4],
-        categories:['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        categories:[],
         style:{
             width: "400",
             height: "300",
@@ -62,11 +63,24 @@ var items= [
     },
     {
         type:"pie-chart",
-        data:[200, 220, 50, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 16, 54.4],
+        ajax: {
+            url: 'http://localhost:3300/api/mockdata/2',
+            type: 'GET',
+            async: true,
+            timeout: 3000,
+            data: [29, 71],
+            dataType: "json",
+            callback: function (data) {
+                if (this.chart.series.length != 0) {
+                    this.chart.series[0].setData(data.message);
+                } else {
+                    this.chart.addSeries({data: data.message});
+                }
+            }
+        },
         style:{
-            width: "200",
-            height: "300",
-            backgroundColor:"purple"
+            width:"200",
+            height:"200"
         }
     },
     {
