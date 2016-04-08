@@ -5,6 +5,7 @@ var items= [
             url: 'http://localhost:3300/api/mockdata',
             type: 'GET',
             async: true,
+            timeout: 6000,
             dataType: "json",
             callback: function (data) {
                 if(this.chart.series.length!=0) {
@@ -24,6 +25,33 @@ var items= [
 
         }
     },
+        {
+            type: "html",
+            selector: "table1",
+            data: ["<h1>Main Header</h1>" +
+            " <h2>Import data table</h2>" +
+                "<table>"+
+                "<tr style='background-color:#00b3ee'>"+
+                "<td>Col1</td>"+
+                "<td>COl2</td>"+
+                "<td>COl3</td>"+
+                "</tr>"+
+                "<tr class='tr2'>"+
+                "<td>Foo1</td>"+
+                "<td>Foo2</td>"+
+                "<td>Foo33</td>"+
+                "</tr>"+
+                "</tr>"+
+                "<tr>"+
+                "<td>Bar1</td>"+
+                "<td>Bar2</td>"+
+                "<td>Bar3</td>"+
+                "</tr>"+
+                "</table>"+
+                "<br>"
+            ]
+        }
+    ,
     {
         type:"spline-chart",
         data:[1, 2, 3, 4, 5, 6, 12, 6],
@@ -49,14 +77,6 @@ var items= [
             fontSize: "50px",
             width: "80",
             height: "80"
-        }
-    },
-    {
-        type:"text",
-        data:["SOME VERY IMPORTANT DATA"],
-        style:{
-            width: "200",
-            height: "300"
         }
     },
     {

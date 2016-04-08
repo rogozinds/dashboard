@@ -24,3 +24,17 @@ div.resizer { width: 10px; height: 10px; background: blue; position:absolute; ri
     -webkit-align-content: center;
     align-content: center;
 }
+
+.table1 table {
+    margin-left:20px;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.table1 td {
+    padding: 3px;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+.table1 table .tr2 {
+    background-color: rosybrown;
+}

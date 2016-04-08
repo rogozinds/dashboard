@@ -93,6 +93,12 @@ Dashboard.prototype = {
     createTextNode: function(item) {
       return  document.createTextNode(item.data[0]);
     },
+    createHTMLNode: function(item) {
+        var div = document.createElement("div");
+        div.innerHTML=item.data[0];
+        div.className=item.selector;
+        return  div;
+    },
     createGraph: function(element,item) {
         var type = item.type.replace("-chart","")
         var elemHeight=element.style.getPropertyValue("height").replace("px","");
@@ -125,11 +131,15 @@ Dashboard.prototype = {
                     success: item.ajax.callback.bind(item.ajax)
                 });
             };
-            var callWithTimeout= function (timeout) {
+            var timeout=5000;
+            if(item.ajax.timeout){
+                timeout=item.ajax.timeout;
+            }
+            var callWithTimeout= function (startTimeout) {
                 setTimeout(function() {
                     ajaxRequest();
-                    callWithTimeout(1000);
-                }, timeout
+                    callWithTimeout(timeout);
+                }, startTimeout
                 );
             }
             callWithTimeout(20);
@@ -140,6 +150,10 @@ Dashboard.prototype = {
     setContent: function(element,item) {
         if(item.type == "text") {
             var node =this.createTextNode(item);
+            element.appendChild(node);
+        }
+        else if (item.type=="html") {
+            var node =this.createHTMLNode(item);
             element.appendChild(node);
         }
         else {
